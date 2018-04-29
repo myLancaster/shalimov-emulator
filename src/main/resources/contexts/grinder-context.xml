@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="controller-context.xml" />
+
+	<bean id="grinder" class="ua.edu.onat.emulator.model.impl.Grinder">
+		<property name="system">
+			<ref bean="system" />
+		</property>
+		<property name="input">
+			<ref bean="input" />
+		</property>
+		<property name="output">
+			<ref bean="output" />
+		</property>
+		<property name="feedforward">
+			<ref bean="feedforward" />
+		</property>
+		<property name="setpoints">
+			<ref bean="setpoints" />
+		</property>
+		<property name="controller">
+			<ref bean="lqController" />
+		</property>
+	</bean>
+
+	<bean id="system" class="Jama.Matrix">
+		<constructor-arg>
+			<array>
+				<array>
+					<value>0</value>
+					<value>1</value>
+					<value>0</value>
+					<value>0</value>
+				</array>
+				<array>
+					<value>0</value>
+					<value>-0.1818</value>
+					<value>2.6727</value>
+					<value>0</value>
+				</array>
+				<array>
+					<value>0</value>
+					<value>0</value>
+					<value>0</value>
+					<value>1</value>
+				</array>
+				<array>
+					<value>0</value>
+					<value>-0.4545</value>
+					<value>31.1818</value>
+					<value>0</value>
+				</array>
+			</array>
+		</constructor-arg>
+	</bean>
+
+	<bean id="input" class="Jama.Matrix">
+		<constructor-arg>
+			<array>
+				<array>
+					<value>0</value>
+				</array>
+				<array>
+					<value>1.8182</value>
+				</array>
+				<array>
+					<value>0</value>
+				</array>
+				<array>
+					<value>4.5455</value>
+				</array>
+			</array>
+		</constructor-arg>
+	</bean>
+
+	<bean id="output" class="Jama.Matrix">
+		<constructor-arg>
+			<array>
+				<array>
+					<value>1</value>
+					<value>0</value>
+					<value>0</value>
+					<value>0</value>
+				</array>
+				<array>
+					<value>0</value>
+					<value>0</value>
+					<value>1</value>
+					<value>0</value>
+				</array>
+			</array>
+		</constructor-arg>
+	</bean>
+
+	<bean id="feedforward" class="Jama.Matrix">
+		<constructor-arg>
+			<array>
+				<array>
+					<value>0</value>
+				</array>
+				<array>
+					<value>0</value>
+				</array>
+			</array>
+		</constructor-arg>
+	</bean>
+
+	<bean id="setpoints" class="Jama.Matrix">
+		<constructor-arg>
+			<array>
+				<array>
+					<value>0.2</value>
+				</array>
+				<array>
+					<value>0</value>
+				</array>
+				<array>
+					<value>0</value>
+				</array>
+				<array>
+					<value>0</value>
+				</array>
+			</array>
+		</constructor-arg>
+	</bean>
+
+</beans>

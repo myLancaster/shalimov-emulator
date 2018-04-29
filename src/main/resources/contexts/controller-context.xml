@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="lqController"
+		class="ua.edu.onat.emulator.control.impl.LQController">
+		<property name="gain">
+			<ref bean="reactorGain" />
+		</property>
+	</bean>
+
+	<bean id="defaultController"
+		class="ua.edu.onat.emulator.control.impl.DefaultController" />
+
+		<bean id="grinderGain" class="Jama.Matrix">
+			<constructor-arg>
+				<array>
+					<value>-1</value>
+					<value>-1.6567</value>
+					<value>18.6854</value>
+					<value>3.4594</value>
+				</array>
+			</constructor-arg>
+		</bean>
+		
+		<bean id="reactorGain" class="Jama.Matrix">
+			<constructor-arg>
+				<array>
+					<value>0.6267</value>
+				</array>
+			</constructor-arg>
+		</bean>
+
+</beans>
