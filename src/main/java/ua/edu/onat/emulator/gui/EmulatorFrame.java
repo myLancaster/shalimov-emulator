@@ -51,7 +51,7 @@ public class EmulatorFrame extends JFrame {
 		JMenu controllerMenu = new JMenu("Контроллер");
 
 		JMenuItem onOffControllerMenuItem = new JMenuItem("Вкл/выкл");
-		onOffControllerMenuItem.addActionListener(new ActionListener() { // TODO Add setpoint changing context.
+		onOffControllerMenuItem.addActionListener(new ActionListener() {
 
 			ClassPathXmlApplicationContext context;
 
@@ -61,11 +61,12 @@ public class EmulatorFrame extends JFrame {
 
 				Controller controller = technologicObject.getController();
 
-				// FIXME TechnologicObject must receive controller instance from Spring.
 				if (controller.isControlling()) {
 					controller = context.getBean("defaultController", DefaultController.class);
+					setpointField.setEditable(true);
 				} else {
 					controller = context.getBean("lqController", LQController.class);
+					setpointField.setEditable(false);
 				}
 
 				technologicObject.setController(controller);
@@ -100,6 +101,7 @@ public class EmulatorFrame extends JFrame {
 		channelPanel.setPreferredSize(new Dimension((int) (this.getWidth() * 0.7), this.getHeight() / 2));
 		
 		setpointField = new JTextField(Double.toString(technologicObject.getSetpoints().get(0,0)));
+		setpointField.setEditable(false);
 		setpointField.addActionListener(new ActionListener() {
 			
 			@Override
@@ -135,9 +137,7 @@ public class EmulatorFrame extends JFrame {
 			}
 		});
 
-		// JPanel bottomPanel = new JPanel();
-		// JLabel logLabel = new JLabel("Log:");
-		// bottomPanel.add(logLabel); // TODO Add log table.
+		// TODO Add log table.
 	}
 
 	public void start() {
