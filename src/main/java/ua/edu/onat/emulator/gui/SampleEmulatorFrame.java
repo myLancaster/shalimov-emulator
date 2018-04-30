@@ -17,16 +17,16 @@ import org.jfree.data.time.DynamicTimeSeriesCollection;
 import org.jfree.data.time.Second;
 import org.jfree.data.xy.XYDataset;
 
-import ua.edu.onat.emulator.model.TechnologicObject;
+import ua.edu.onat.emulator.model.StateSpaceModel;
 
 public class SampleEmulatorFrame extends JFrame {
 
 	private static final long serialVersionUID = 4929521182645563441L;
 	private static final int COUNT = 2 * 60;
-	private TechnologicObject technologicObject;
+	private StateSpaceModel technologicObject;
 	private Timer timer;
 	
-	public SampleEmulatorFrame(TechnologicObject technologicObject) {
+	public SampleEmulatorFrame(StateSpaceModel technologicObject) {
 		this.setTechnologicObject(technologicObject);
 		
 		this.setTitle("Эмулятор работы экструдера");
@@ -75,11 +75,11 @@ public class SampleEmulatorFrame extends JFrame {
 		return result;
 	}
 
-	public TechnologicObject getTechnologicObject() {
+	public StateSpaceModel getTechnologicObject() {
 		return technologicObject;
 	}
 
-	public void setTechnologicObject(TechnologicObject technologicObject) {
+	public void setTechnologicObject(StateSpaceModel technologicObject) {
 		this.technologicObject = technologicObject;
 	}
 

@@ -27,16 +27,16 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ua.edu.onat.emulator.control.Controller;
 import ua.edu.onat.emulator.control.impl.DefaultController;
 import ua.edu.onat.emulator.control.impl.LQController;
-import ua.edu.onat.emulator.model.TechnologicObject;
+import ua.edu.onat.emulator.model.StateSpaceModel;
 
 public class EmulatorFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private static final int COUNT = 2 * 60;
-	private TechnologicObject technologicObject;
+	private StateSpaceModel technologicObject;
 	private Timer timer;
 
-	public EmulatorFrame(TechnologicObject technologicObject) {
+	public EmulatorFrame(StateSpaceModel technologicObject) {
 		this.technologicObject = technologicObject;
 
 		this.setTitle("Эмулятор работы химического реактора");
@@ -129,11 +129,11 @@ public class EmulatorFrame extends JFrame {
 		timer.start();
 	}
 
-	public TechnologicObject getTechnologicObject() {
+	public StateSpaceModel getTechnologicObject() {
 		return technologicObject;
 	}
 
-	public void setTechnologicObject(TechnologicObject technologicObject) {
+	public void setTechnologicObject(StateSpaceModel technologicObject) {
 		this.technologicObject = technologicObject;
 	}
 

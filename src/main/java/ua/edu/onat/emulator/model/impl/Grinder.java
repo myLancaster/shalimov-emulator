@@ -1,9 +1,9 @@
 package ua.edu.onat.emulator.model.impl;
 
 import Jama.Matrix;
-import ua.edu.onat.emulator.model.TechnologicObject;
+import ua.edu.onat.emulator.model.StateSpaceModel;
 
-public class Grinder extends TechnologicObject {
+public class Grinder extends StateSpaceModel {
 
 	@Override
 	public void tick() {
