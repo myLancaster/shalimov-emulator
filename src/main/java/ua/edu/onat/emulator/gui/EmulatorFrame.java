@@ -1,5 +1,6 @@
 package ua.edu.onat.emulator.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +13,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import org.jfree.chart.ChartFactory;
@@ -33,6 +35,7 @@ public class EmulatorFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private static final int COUNT = 2 * 60;
+	JTextField setpointField;
 	private StateSpaceModel technologicObject;
 	private Timer timer;
 
@@ -95,6 +98,18 @@ public class EmulatorFrame extends JFrame {
 
 		JPanel channelPanel = new JPanel();
 		channelPanel.setPreferredSize(new Dimension((int) (this.getWidth() * 0.7), this.getHeight() / 2));
+		
+		setpointField = new JTextField(Double.toString(technologicObject.getSetpoints().get(0,0)));
+		setpointField.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				technologicObject.getSetpoints().set(0, 0, Double.parseDouble(setpointField.getText()));
+				
+			}
+		});
+		
+		channelPanel.add(setpointField, BorderLayout.WEST);
 
 		final DynamicTimeSeriesCollection phDataset = new DynamicTimeSeriesCollection(1, COUNT, new Second());
 		phDataset.setTimeBase(new Second());
@@ -102,7 +117,7 @@ public class EmulatorFrame extends JFrame {
 
 		JFreeChart firstChart = createChart(phDataset, "Кислотно-щелочной баланс", "чч:мм:сс", "pH, %");
 
-		channelPanel.add(new ChartPanel(firstChart));
+		channelPanel.add(new ChartPanel(firstChart), BorderLayout.EAST);
 
 		this.add(channelPanel);
 
