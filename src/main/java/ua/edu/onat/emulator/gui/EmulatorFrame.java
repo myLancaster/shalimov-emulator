@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
@@ -34,8 +35,9 @@ import ua.edu.onat.emulator.model.StateSpaceModel;
 public class EmulatorFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOGGER = Logger.getLogger(EmulatorFrame.class.getSimpleName());
 	private static final int COUNT = 2 * 60;
-	JTextField setpointField;
+	private JTextField setpointField;
 	private StateSpaceModel technologicObject;
 	private Timer timer;
 
@@ -56,7 +58,7 @@ public class EmulatorFrame extends JFrame {
 			ClassPathXmlApplicationContext context;
 
 			@Override
-			public void actionPerformed(ActionEvent e) { // TODO Add controller state changing log.
+			public void actionPerformed(ActionEvent e) {
 				context = new ClassPathXmlApplicationContext("contexts/controller-context.xml");
 
 				Controller controller = technologicObject.getController();
@@ -64,9 +66,11 @@ public class EmulatorFrame extends JFrame {
 				if (controller.isControlling()) {
 					controller = context.getBean("defaultController", DefaultController.class);
 					setpointField.setEditable(true);
+					LOGGER.info("Контроллер отключен");
 				} else {
 					controller = context.getBean("lqController", LQController.class);
 					setpointField.setEditable(false);
+					LOGGER.info("Контроллер включен");
 				}
 
 				technologicObject.setController(controller);
@@ -107,7 +111,7 @@ public class EmulatorFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				technologicObject.getSetpoints().set(0, 0, Double.parseDouble(setpointField.getText()));
-				
+				LOGGER.info("Задание pH баланса изменено на " + setpointField.getText());
 			}
 		});
 		
