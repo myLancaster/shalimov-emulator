@@ -164,7 +164,7 @@ public class EmulatorFrame extends JFrame {
 	private void createAndShowAboutMe() {
 		JFrame frame = new JFrame("О проекте");
 		frame.setPreferredSize(new Dimension(896, 504));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		JEditorPane htmlPane = new JEditorPane();
 		htmlPane.setPreferredSize(frame.getSize());
