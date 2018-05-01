@@ -106,6 +106,7 @@ public class EmulatorFrame extends JFrame {
 		channelPanel.setPreferredSize(new Dimension((int) (this.getWidth() * 0.7), this.getHeight() / CHANNEL_COUNT));
 		
 		setpointField = new JTextField(Double.toString(technologicObject.getSetpoints().get(0,0)));
+		setpointField.setColumns(4);
 		setpointField.setEditable(false);
 		setpointField.addActionListener(new ActionListener() {
 			
