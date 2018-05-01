@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -39,6 +40,7 @@ public class EmulatorFrame extends JFrame {
 	private static final int MOMENT_COUNT = 2 * 60;
 	private static final int CHANNEL_COUNT = 1;
 	private JTextField setpointField;
+	private JLabel controllerLabel;
 	private StateSpaceModel technologicObject;
 	private Timer timer;
 
@@ -75,6 +77,7 @@ public class EmulatorFrame extends JFrame {
 				}
 
 				technologicObject.setController(controller);
+				controllerLabel.setText(makeControllerStateLabel());
 
 				context.close();
 			}
@@ -128,6 +131,10 @@ public class EmulatorFrame extends JFrame {
 		channelPanel.add(new ChartPanel(firstChart), BorderLayout.EAST);
 
 		this.add(channelPanel);
+		
+		controllerLabel = new JLabel(makeControllerStateLabel());
+		
+		this.add(controllerLabel, BorderLayout.SOUTH);
 
 		timer = new Timer(technologicObject.getSamplingTime(), new ActionListener() {
 
@@ -154,6 +161,18 @@ public class EmulatorFrame extends JFrame {
 
 	public void setTechnologicObject(StateSpaceModel technologicObject) {
 		this.technologicObject = technologicObject;
+	}
+	
+	private String makeControllerStateLabel() {
+		String label = "Состояние контроллера: ";
+		
+		if(technologicObject.getController().isControlling()) {
+			label = label.concat("включен");
+		} else {
+			label = label.concat("отключен");
+		}
+		
+		return label;
 	}
 
 	private JFreeChart createChart(final XYDataset dataset, String title, String timeUnits, String valueUnits) {
