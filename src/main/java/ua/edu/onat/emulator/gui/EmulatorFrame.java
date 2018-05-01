@@ -142,8 +142,6 @@ public class EmulatorFrame extends JFrame {
 				phDataset.appendData(newData);
 			}
 		});
-
-		// TODO Add log table.
 	}
 
 	public void start() {
