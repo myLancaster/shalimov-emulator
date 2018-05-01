@@ -36,7 +36,7 @@ public class EmulatorFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = Logger.getLogger(EmulatorFrame.class.getSimpleName());
-	private static final int COUNT = 2 * 60;
+	private static final int MOMENT_COUNT = 2 * 60;
 	private JTextField setpointField;
 	private StateSpaceModel technologicObject;
 	private Timer timer;
@@ -117,7 +117,7 @@ public class EmulatorFrame extends JFrame {
 		
 		channelPanel.add(setpointField, BorderLayout.WEST);
 
-		final DynamicTimeSeriesCollection phDataset = new DynamicTimeSeriesCollection(1, COUNT, new Second());
+		final DynamicTimeSeriesCollection phDataset = new DynamicTimeSeriesCollection(1, MOMENT_COUNT, new Second());
 		phDataset.setTimeBase(new Second());
 		phDataset.addSeries(new float[1], 0, "Кислотно-щелочной баланс");
 
