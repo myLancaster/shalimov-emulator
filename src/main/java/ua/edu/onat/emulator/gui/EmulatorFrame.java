@@ -37,6 +37,7 @@ public class EmulatorFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = Logger.getLogger(EmulatorFrame.class.getSimpleName());
 	private static final int MOMENT_COUNT = 2 * 60;
+	private static final int CHANNEL_COUNT = 1;
 	private JTextField setpointField;
 	private StateSpaceModel technologicObject;
 	private Timer timer;
@@ -102,7 +103,7 @@ public class EmulatorFrame extends JFrame {
 		this.setJMenuBar(menuBar);
 
 		JPanel channelPanel = new JPanel();
-		channelPanel.setPreferredSize(new Dimension((int) (this.getWidth() * 0.7), this.getHeight() / 2));
+		channelPanel.setPreferredSize(new Dimension((int) (this.getWidth() * 0.7), this.getHeight() / CHANNEL_COUNT));
 		
 		setpointField = new JTextField(Double.toString(technologicObject.getSetpoints().get(0,0)));
 		setpointField.setEditable(false);
