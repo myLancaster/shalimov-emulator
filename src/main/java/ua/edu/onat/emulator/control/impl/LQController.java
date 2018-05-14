@@ -9,8 +9,7 @@ public class LQController implements Controller {
 
 	@Override
 	public Matrix makeControlSignal(Matrix setpoints, Matrix outputs) {
-		Matrix controls = gain.uminus().times(outputs);
-		controls.plusEquals(setpoints); // FIXME Matrix sizes must agree.
+		Matrix controls = gain.uminus().times(setpoints.minus(outputs));
 
 		return controls;
 	}

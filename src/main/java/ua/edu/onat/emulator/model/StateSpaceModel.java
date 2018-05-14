@@ -38,7 +38,7 @@ public abstract class StateSpaceModel implements TechnologicObject {
 
 	public void setInput(Matrix input) {
 		this.input = input;
-		outputs = new Matrix(1, input.getRowDimension());
+		outputs = new Matrix(input.getRowDimension(), 1);
 	}
 
 	public Matrix getOutput() {

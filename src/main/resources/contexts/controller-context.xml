@@ -7,7 +7,7 @@
 	<bean id="lqController"
 		class="ua.edu.onat.emulator.control.impl.LQController">
 		<property name="gain">
-			<ref bean="reactorGain" />
+			<ref bean="forgeGain" />
 		</property>
 	</bean>
 
@@ -29,6 +29,15 @@
 			<constructor-arg>
 				<array>
 					<value>0.6267</value>
+				</array>
+			</constructor-arg>
+		</bean>
+		
+		<bean id="forgeGain" class="Jama.Matrix">
+			<constructor-arg>
+				<array>
+					<value>-0.0072</value>
+					<value>-0.0033</value>
 				</array>
 			</constructor-arg>
 		</bean>
