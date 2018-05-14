@@ -39,7 +39,7 @@ public class EmulatorFrame extends JFrame {
 	private static final Logger LOGGER = Logger.getLogger(EmulatorFrame.class.getSimpleName());
 	private static final int MOMENT_COUNT = 2 * 60;
 	private static final int CHANNEL_COUNT = 1;
-	private JTextField setpointField;
+	private JTextField temperatureSetpoint;
 	private JLabel controllerLabel;
 	private StateSpaceModel technologicObject;
 	private Timer timer;
@@ -47,7 +47,7 @@ public class EmulatorFrame extends JFrame {
 	public EmulatorFrame(StateSpaceModel technologicObject) {
 		this.technologicObject = technologicObject;
 
-		this.setTitle("Эмулятор работы химического реактора");
+		this.setTitle("Эмулятор работы печи");
 		this.setPreferredSize(new Dimension(1280, 720));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -68,11 +68,11 @@ public class EmulatorFrame extends JFrame {
 
 				if (controller.isControlling()) {
 					controller = context.getBean("defaultController", DefaultController.class);
-					setpointField.setEditable(true);
+					temperatureSetpoint.setEditable(true);
 					LOGGER.info("Контроллер отключен");
 				} else {
 					controller = context.getBean("lqController", LQController.class);
-					setpointField.setEditable(false);
+					temperatureSetpoint.setEditable(false);
 					LOGGER.info("Контроллер включен");
 				}
 
@@ -108,25 +108,25 @@ public class EmulatorFrame extends JFrame {
 		JPanel channelPanel = new JPanel();
 		channelPanel.setPreferredSize(new Dimension((int) (this.getWidth() * 0.7), this.getHeight() / CHANNEL_COUNT));
 		
-		setpointField = new JTextField(Double.toString(technologicObject.getSetpoints().get(0,0)));
-		setpointField.setColumns(4);
-		setpointField.setEditable(false);
-		setpointField.addActionListener(new ActionListener() {
+		temperatureSetpoint = new JTextField(Double.toString(technologicObject.getSetpoints().get(0,0)));
+		temperatureSetpoint.setColumns(4);
+		temperatureSetpoint.setEditable(false);
+		temperatureSetpoint.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				technologicObject.getSetpoints().set(0, 0, Double.parseDouble(setpointField.getText()));
-				LOGGER.info("Задание pH баланса изменено на " + setpointField.getText());
+				technologicObject.getSetpoints().set(0, 0, Double.parseDouble(temperatureSetpoint.getText()));
+				LOGGER.info("Задание температуры изменено на " + temperatureSetpoint.getText());
 			}
 		});
 		
-		channelPanel.add(setpointField, BorderLayout.WEST);
+		channelPanel.add(temperatureSetpoint, BorderLayout.WEST);
 
-		final DynamicTimeSeriesCollection phDataset = new DynamicTimeSeriesCollection(1, MOMENT_COUNT, new Second());
-		phDataset.setTimeBase(new Second());
-		phDataset.addSeries(new float[1], 0, "Кислотно-щелочной баланс");
+		final DynamicTimeSeriesCollection temperatureDataset = new DynamicTimeSeriesCollection(1, MOMENT_COUNT, new Second());
+		temperatureDataset.setTimeBase(new Second());
+		temperatureDataset.addSeries(new float[1], 0, "Температура");
 
-		JFreeChart firstChart = createChart(phDataset, "Кислотно-щелочной баланс", "чч:мм:сс", "pH, %");
+		JFreeChart firstChart = createChart(temperatureDataset, "Температура", "чч:мм:сс", "градусы Цельсия");
 
 		channelPanel.add(new ChartPanel(firstChart), BorderLayout.EAST);
 
@@ -144,9 +144,9 @@ public class EmulatorFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				technologicObject.tick();
 				double[][] outputs = technologicObject.getOutputs().getArray();
-				newData[0] = (float) outputs[0][0];
-				phDataset.advanceTime();
-				phDataset.appendData(newData);
+				newData[0] = (float) outputs[1][0];
+				temperatureDataset.advanceTime();
+				temperatureDataset.appendData(newData);
 			}
 		});
 	}
